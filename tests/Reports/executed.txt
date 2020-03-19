@@ -1,0 +1,18 @@
+Database (Marmelade\Database)
+ [x] Get email address
+
+Person Notification Service (Marmelade\PersonNotificationService)
+ [x] Notify
+
+Send Mail (Marmelade\SendMail)
+ [x] Mail
+
+Simple Mailer (Marmelade\SimpleMailer)
+ [x] Send
+
+Survey Mailer (Marmelade\SurveyMailer)
+ [x] Send survey
+
+Survey Repository (Marmelade\SurveyRepository)
+ [x] Load survey
+

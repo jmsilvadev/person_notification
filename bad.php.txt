@@ -1,0 +1,128 @@
+<?php
+/*
+* If we want to follow SOLID design principles, and write secure code that complies with 
+* the PSR-12 coding standard, what problems can you identify with the following code?
+* (Assume each class/interface is in its own file, with namespaces, and classes are autoloaded).
+* Do not worry about the business logic - this is a very contrived example for the sake of
+* simplicity and should not be taken too literally. Do not worry about the lack of docblocks, 
+* nor the lack of error handling as they have been omitted for brevity. No need to go into great 
+* detail on the flaws, just highlight any security, PSR-12, or SOLID violations (hint: there are  
+* five deliberate SOLID violations).
+*
+* Your response to this task should look something like this:
+* 
+* PSR-12 violations:
+* The opening brace on the for loop should be on the same line in the foo method of the Bar class.
+* The file should end with a blank line.
+* Etc.
+*  
+* Security violations:
+* There is a directory traversal vulnerability in the foobar method of the BarFoo class
+* There is an XSS vulnerability in the render method of the FooView class.
+* Etc.
+*  
+* SOLID violations:
+* Method xyz of class Abc violates the Single Responsibility Principle by handling both 
+* persistence and rendering.
+* Etc.
+*/
+
+//Violates Interface Segregator 
+interface MailerInterface
+{
+    public function getEmailAddress($personId, string $department);
+    public function addRecipient(string $emailAddress);
+    public function send(string $subject, string $body);
+    public function sendSurvey($surveyId);
+}
+
+class SimpleMailer implements MailerInterface
+{
+    private $emailAddresses = [];
+
+    public function addRecipient(string $emailAddress)
+    {
+
+        $this->emailAddresses[] = $emailAddress;
+    }
+
+    public function send(string $subject, string $body)
+    {
+        return mail(implode(',', $this->emailAddresses), $subject, $body);
+    }
+
+    public function getEmailAddress($personId, string $department)
+    {
+        // Violates SRP
+        $dbName = $this->getDbName($department);
+        $db = new MyDatabaseClass($dbName); //Definition of MyDatabaseClass not shown, but assume it
+                                            //extends PDO using composition, and only needs to know 
+                                            //the database name.
+        //SECURITY ISSUE - SQL Injection
+        $stm = $db->prepare('SELECT email FROM person WHERE id = ' . $personId);
+        $stm->execute();
+
+        return $stm->fetchColumn(0);
+    }
+
+    public function sendSurvey($surveyId)
+    {
+        return "We don't send surveys with SimpleMailer";
+    }
+
+    private function getDbName(string $department)
+    {
+        //Violates CleanCode and Increase CRAP
+        switch ($department) {
+            case 'Accounts':
+                return 'finance';
+            case 'Complaints':
+                return 'operations';
+        }
+
+        return 'warehouse';
+    }
+}
+
+class SurveyMailer extends SimpleMailer implements MailerInterface
+{
+    private $surveyRepository;
+
+    //Definition of SurveyRepository not shown, but assume it is fine.
+    // According Repository Pattern this DI must be an Interface
+    // According with DIP (SOLID): one should "Depend upon Abstractions" Do not depend upon concretions
+    public function __construct(SurveyRepository $surveyRepository)
+    {
+        $this->surveyRepository = $surveyRepository;
+    }
+
+    //Violates SRP, what this method sould be to do? Send Survey or return a Survey?
+    public function sendSurvey(int $surveyId)
+    {
+        $survey = $this->surveyRepository->loadSurvey($surveyId);
+        $this->send('Survey', 'Please respond to this survey: http://www.example.com/survey?hash=' . $survey->hash);
+        return $survey;
+    }
+}
+
+//Violates the open/close principle, this must be implement a strategy pattern
+// or simply implement an Interface
+class PersonNotificationService
+{
+    const NOTIFICATION_SURVEY_ID = 1;
+
+    /** @var MailerInterface **/
+    private $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+    public function notify(string $personId, string $department, string $message) {
+        $emailAddress = $this->mailer->getEmailAddress( $personId, $department );
+        $this->mailer->addRecipient( $emailAddress );
+        $this->mailer->sendSurvey( self::NOTIFICATION_SURVEY_ID );
+        return $this->mailer->send( 'Automatic Notification', $message );
+    }
+}

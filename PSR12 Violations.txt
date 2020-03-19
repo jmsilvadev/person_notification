@@ -1,0 +1,50 @@
+PSR-12 violations:
+
+We can use a simple tool to sniffer coding standards violations: PHPCS
+
+./vendor/bin/phpcs -sv --extensions=php --standard=PSR12 --ignore=vendor,tests .
+Registering sniffs in the PSR12 standard... DONE (59 sniffs registered)
+Creating file list... DONE (1 files in queue)
+Changing into directory /home/josuesilva/marmalade
+Processing bad.php [PHP => 642 tokens in 118 lines]... DONE in 23ms (27 errors, 1 warnings)
+
+FILE: /home/josuesilva/marmalade/bad.php
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+FOUND 27 ERRORS AND 1 WARNING AFFECTING 20 LINES
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+   1 | ERROR   | [x] Header blocks must be separated by a single blank line (PSR12.Files.FileHeader.SpacingAfterBlock)
+   1 | ERROR   | [x] End of line character is invalid; expected "\n" but found "\r\n" (Generic.Files.LineEndings.InvalidEOLChar)
+   3 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+   7 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+   8 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+   9 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+  13 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+  18 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+  23 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+  25 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+  30 | ERROR   | [ ] Each interface must be in a namespace of at least one level (a top-level vendor name)
+     |         |     (PSR1.Classes.ClassDeclaration.MissingNamespace)
+  38 | ERROR   | [ ] Each interface must be in a file by itself (PSR1.Classes.ClassDeclaration.MultipleClasses)
+  38 | ERROR   | [ ] Each class must be in a namespace of at least one level (a top-level vendor name) (PSR1.Classes.ClassDeclaration.MissingNamespace)
+  56 | ERROR   | [x] Whitespace found at end of line (Squiz.WhiteSpace.SuperfluousWhitespace.EndLine)
+  82 | ERROR   | [ ] Each class must be in a file by itself (PSR1.Classes.ClassDeclaration.MultipleClasses)
+  82 | ERROR   | [ ] Each class must be in a namespace of at least one level (a top-level vendor name) (PSR1.Classes.ClassDeclaration.MissingNamespace)
+ 100 | ERROR   | [ ] Each class must be in a file by itself (PSR1.Classes.ClassDeclaration.MultipleClasses)
+ 100 | ERROR   | [ ] Each class must be in a namespace of at least one level (a top-level vendor name) (PSR1.Classes.ClassDeclaration.MissingNamespace)
+ 102 | WARNING | [ ] Visibility must be declared on all constants if your project supports PHP 7.1 or later
+     |         |     (PSR12.Properties.ConstantVisibility.NotFound)
+ 112 | ERROR   | [x] Opening brace should be on a new line (Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine)
+ 113 | ERROR   | [x] Space after opening parenthesis of function call prohibited (PSR2.Methods.FunctionCallSignature.SpaceAfterOpenBracket)
+ 113 | ERROR   | [x] Expected 0 spaces before closing bracket; 1 found (PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket)
+ 114 | ERROR   | [x] Space after opening parenthesis of function call prohibited (PSR2.Methods.FunctionCallSignature.SpaceAfterOpenBracket)
+ 114 | ERROR   | [x] Expected 0 spaces before closing bracket; 1 found (PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket)
+ 115 | ERROR   | [x] Space after opening parenthesis of function call prohibited (PSR2.Methods.FunctionCallSignature.SpaceAfterOpenBracket)
+ 115 | ERROR   | [x] Expected 0 spaces before closing bracket; 1 found (PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket)
+ 116 | ERROR   | [x] Space after opening parenthesis of function call prohibited (PSR2.Methods.FunctionCallSignature.SpaceAfterOpenBracket)
+ 116 | ERROR   | [x] Expected 0 spaces before closing bracket; 1 found (PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket)
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+PHPCBF CAN FIX THE 20 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Time: 96ms; Memory: 6MB
+

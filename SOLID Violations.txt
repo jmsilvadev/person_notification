@@ -15,5 +15,4 @@ ISP Violations
 - The package has only one interface and it must have more. MailerInterface needs to be broken on at least two interfaces: MailerInterface and SurveyMailerInterface.
 
 DIP Violations
-- SurveyMailer class violates the DIP because it uses a concrete class (SurveyRepository) instead of an abstract class, in this case, an interface.
-
+- SurveyMailer class violates the DIP because it uses a concrete class (SurveyRepository) instead of an abstract class, in this case, it could use an interface or apply the strategy pattern.

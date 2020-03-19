@@ -27,7 +27,6 @@
 * Etc.
 */
 
-//Violates Interface Segregator 
 interface MailerInterface
 {
     public function getEmailAddress($personId, string $department);
@@ -53,12 +52,10 @@ class SimpleMailer implements MailerInterface
 
     public function getEmailAddress($personId, string $department)
     {
-        // Violates SRP
         $dbName = $this->getDbName($department);
         $db = new MyDatabaseClass($dbName); //Definition of MyDatabaseClass not shown, but assume it
                                             //extends PDO using composition, and only needs to know 
                                             //the database name.
-        //SECURITY ISSUE - SQL Injection
         $stm = $db->prepare('SELECT email FROM person WHERE id = ' . $personId);
         $stm->execute();
 
@@ -72,7 +69,6 @@ class SimpleMailer implements MailerInterface
 
     private function getDbName(string $department)
     {
-        //Violates CleanCode and Increase CRAP
         switch ($department) {
             case 'Accounts':
                 return 'finance';
@@ -89,14 +85,11 @@ class SurveyMailer extends SimpleMailer implements MailerInterface
     private $surveyRepository;
 
     //Definition of SurveyRepository not shown, but assume it is fine.
-    // According Repository Pattern this DI must be an Interface
-    // According with DIP (SOLID): one should "Depend upon Abstractions" Do not depend upon concretions
     public function __construct(SurveyRepository $surveyRepository)
     {
         $this->surveyRepository = $surveyRepository;
     }
 
-    //Violates SRP, what this method sould be to do? Send Survey or return a Survey?
     public function sendSurvey(int $surveyId)
     {
         $survey = $this->surveyRepository->loadSurvey($surveyId);
@@ -105,8 +98,6 @@ class SurveyMailer extends SimpleMailer implements MailerInterface
     }
 }
 
-//Violates the open/close principle, this must be implement a strategy pattern
-// or simply implement an Interface
 class PersonNotificationService
 {
     const NOTIFICATION_SURVEY_ID = 1;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Marmelade\Database;
 
@@ -14,7 +15,7 @@ class MyDatabaseClass implements DatabaseInterface
         $this->conn = $conn ?? Connection::instance();
     }
 
-    public function getEmailAddress($personId, string $department)
+    public function getEmailAddress(int $personId, string $department): string
     {
         $dbName = $this->getDbName($department);
         $db = $this->conn->getConn($dbName);
@@ -22,7 +23,7 @@ class MyDatabaseClass implements DatabaseInterface
         $stm->bindValue(':id', $personId);
         $stm->execute();
 
-        return $stm->fetchColumn(0);
+        return $stm->fetchColumn(0) ?? '';
     }
 
     private function getDbName(string $department): string

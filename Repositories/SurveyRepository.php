@@ -1,6 +1,7 @@
 <?php
+declare(strict_types = 1);
 
-namespace Marmelade\Mailer;
+namespace Marmelade\Repositories;
 
 use Marmelade\Interfaces\SurveyRepositoryInterface;
 

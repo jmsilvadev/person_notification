@@ -2,7 +2,7 @@
 namespace Marmelade;
 
 use PHPUnit\Framework\TestCase;
-use Marmelade\Mailer\SurveyRepository;
+use Marmelade\Repositories\SurveyRepository;
 
 class SurveyRepositoryTest extends TestCase
 {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Marmelade\Services;
 
@@ -22,12 +23,16 @@ class PersonNotificationService implements NotificationServiceInterface
         $this->mailer = $mailer;
     }
 
-    //Type String og personId with error, must be integer
-    public function notify(string $personId, string $department, string $message)
+    public function notify(int $personId, string $department, string $message): bool
     {
         $emailAddress = $this->db->getEmailAddress($personId, $department);
         $this->mailer->addRecipient($emailAddress);
-        $this->mailer->sendSurvey(self::NOTIFICATION_SURVEY_ID);
-        return $this->mailer->send('Automatic Notification', $message);
+        $sent = $this->mailer->sendSurvey(self::NOTIFICATION_SURVEY_ID);
+        if ($sent) {
+            return $this->mailer->send('Automatic Notification', $message);
+        }
+        
+        return false;
+        
     }
 }

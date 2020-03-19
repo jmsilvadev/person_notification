@@ -1,0 +1,4 @@
+CLEAN CODE Violations
+
+- The use of conditionals structures like switch and elseif must be avoid (getDbName).
+- Avoid use of unused parameters (sendSurvey($surveyId) in Class SimpleMailer)

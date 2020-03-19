@@ -3,7 +3,7 @@ namespace Marmelade;
 
 use PHPUnit\Framework\TestCase;
 use Marmelade\Mailer\SurveyMailer;
-use Marmelade\Mailer\SurveyRepository;
+use Marmelade\Repositories\SurveyRepository;
 
 class SurveyMailerTest extends TestCase
 {

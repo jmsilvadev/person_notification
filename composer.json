@@ -13,7 +13,8 @@
             "Marmelade\\Database\\": "Database/",
             "Marmelade\\Interfaces\\": "Interfaces/",
             "Marmelade\\Mailer\\": "Mailer/",
-            "Marmelade\\Services\\": "Services/"
+            "Marmelade\\Services\\": "Services/",
+            "Marmelade\\Repositories\\": "Repositories/"
         }
     }
 }

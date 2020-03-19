@@ -1,0 +1,19 @@
+SOLID Violations
+
+In my opinion the code violates all principles os SOLID.
+
+SRP violations
+- SimpleMailer Class Violates the SRP because her responsibility is not to manipulate the database and send surveys, but only to send email. This class must be fully refactored. These methods must be relocated to other classes: getEmailAddress, sendSurvey, getDbName.
+
+OCP violations
+- Class PersonNotificationService violates OCP because it does not implement an interface, the use of the interface ensures that what was done continues to work and forces developers to extend the class instead of changing it. If we apply the refactor suggested above, there will be more classes and these classes should have an interface.
+
+LSP Violations
+- SimpleMailer class violates the LSP when using the sendSurvey method. This class must be refactored to support subtypes and their subtypes will have a specific behavior, but they must maintain the simple behavior of direct mail, with this we can make the liskov substitution.
+
+ISP Violations
+- The package has only one interface and it must have more. MailerInterface needs to be broken on at least two interfaces: MailerInterface and SurveyMailerInterface.
+
+DIP Violations
+- SurveyMailer class violates the DIP because it uses a concrete class (SurveyRepository) instead of an abstract class, in this case, an interface.
+

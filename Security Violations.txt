@@ -1,0 +1,16 @@
+Global security:
+- All functions must be "Typed", their parameters and their responses. It is highly recommended that "strict_types" be active to avoid type coercion.
+
+Specific issues:
+- There is a security breach in the method addRecipient(string $ emailAddress), without validating and sanitizing the input parameter, a spammer can inject new lines with "CC" or "BCC". The input parameter must be validated and sanitized before assignment.
+
+- There are two violations of secure in the method send(string $ subject, string $ body). First, the parameter body can be used as an XSS attack, injecting malicious scripts, if the content is in HTML format. The input parameter must be escaped using htmlspecialchars. Second, before sending, the e-mail address must be checked if it exists, because if it doesn't exist, the system will crash.
+
+- There is a security breach in the method getEmailAddress($ personId, string $ department), the $ personId parameter allows SQL INJECTION. The parameter must be typed as int and the method must be used PDO :: bindValue to protect the injections.
+
+- I am in doubt if can be possible to use a CSRF attack in the method sendSurvey. Maybe manipulating the hash I can get others surveys, I dont know if is a security breach.
+
+- There are secutrity issues in the method notify, but if we apply security actions in methods above, the only action that we have make in this method is add a check if the sendSurvey returns a valid response, if the response be true then we send the automatic notification, if not, we don't.
+
+
+
